@@ -51,4 +51,10 @@ public class CardGameServiceImpl implements CardGameService {
     public CardGame selectByGameId(final int gameId) {
         return gameMapper.selectByPrimaryKey(gameId);
     }
+
+    @Override
+    public int insertOne(final CardGame cardGame) {
+        final int selective = gameMapper.insert(cardGame);
+        return selective;
+    }
 }

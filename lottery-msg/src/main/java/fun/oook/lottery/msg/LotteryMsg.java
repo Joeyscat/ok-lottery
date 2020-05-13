@@ -8,6 +8,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author ZhouYu
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker

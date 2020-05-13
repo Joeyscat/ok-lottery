@@ -12,4 +12,6 @@ public interface CardGameService {
     PageBean<CardGame> listByStatus(int status, int currentPage, int limit);
 
     CardGame selectByGameId(int gameId);
+
+    int insertOne(CardGame cardGame);
 }

@@ -87,6 +87,8 @@ public class GameTask implements SimpleJob {
             // 令牌桶
             final List<Long> tokenList = new ArrayList<>();
             gameProducts.forEach(gp -> {
+                final Integer productId = gp.getProductid();
+
                 for (int i = 0; i < gp.getAmount(); i++) {
                     // 生成amount个start到end之间的随机时间戳作为令牌
                     long token = start + new Random().nextInt((int) duration);
@@ -94,10 +96,10 @@ public class GameTask implements SimpleJob {
                     token = token * 1000 + new Random().nextInt(999);
                     tokenList.add(token);
 
-                    log.info("token -> game : {} -> {}", token / 1000, productMap.get(gp.getProductid()).getName());
+                    log.info("token -> game : {} -> {}", token / 1000, productMap.get(productId).getName());
 
                     redisUtil.set(RedisKeys.GAME_TOKEN + gameId + "_" + token,
-                            productMap.get(gp.getProductid()), expire);
+                            productMap.get(productId), expire);
                 }
             });
             // token排序后存入redis队列

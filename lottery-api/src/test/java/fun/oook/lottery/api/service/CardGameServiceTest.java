@@ -4,6 +4,7 @@ import fun.oook.lottery.commons.db.entity.CardGame;
 import fun.oook.lottery.commons.util.PageBean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 import java.util.Date;
 
+@Disabled
 @SpringBootTest
 class CardGameServiceTest {
 
@@ -25,8 +27,8 @@ class CardGameServiceTest {
     void insertOne(){
         final CardGame cardGame = new CardGame();
         cardGame.setTitle("ss");
-        cardGame.setType(0);
-        cardGame.setStatus(0);
+        cardGame.setType((byte) 0);
+        cardGame.setStatus((byte) 0);
         cardGame.setInfo("ss");
         cardGame.setPic("ss");
         cardGame.setStarttime(new Date());

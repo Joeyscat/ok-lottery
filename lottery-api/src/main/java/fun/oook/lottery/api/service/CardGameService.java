@@ -1,7 +1,10 @@
 package fun.oook.lottery.api.service;
 
 import fun.oook.lottery.commons.db.entity.CardGame;
+import fun.oook.lottery.commons.db.entity.CardProductDTO;
 import fun.oook.lottery.commons.util.PageBean;
+
+import java.util.List;
 
 /**
  * @author ZhouYu
@@ -14,4 +17,6 @@ public interface CardGameService {
     CardGame selectByGameId(int gameId);
 
     int insertOne(CardGame cardGame);
+
+    List<CardProductDTO> productDTOS(int gameId);
 }

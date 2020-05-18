@@ -3,6 +3,7 @@ package fun.oook.lottery.api.controller;
 import fun.oook.lottery.api.service.CardGameService;
 import fun.oook.lottery.api.service.ViewCardUserHitService;
 import fun.oook.lottery.commons.db.entity.CardGame;
+import fun.oook.lottery.commons.db.entity.CardProductDTO;
 import fun.oook.lottery.commons.db.entity.ViewCardUserHit;
 import fun.oook.lottery.commons.util.ApiResult;
 import fun.oook.lottery.commons.util.PageBean;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author ZhouYu
@@ -51,6 +53,15 @@ public class GameController {
     })
     public ApiResult<CardGame> info(@PathVariable("game_id") int gameId) {
         return new ApiResult<>(1, "成功", cardGameService.selectByGameId(gameId));
+    }
+
+    @GetMapping("/products/{game_id}")
+    @ApiOperation(value = "奖品信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "game_id", value = "活动id", example = "1", required = true)
+    })
+    public ApiResult<List<CardProductDTO>> products(@PathVariable("game_id") int gameId) {
+        return new ApiResult<>(1, "成功", cardGameService.productDTOS(gameId));
     }
 
     @GetMapping("/hit/{game_id}/{cur_page}/{limit}")

@@ -4,12 +4,15 @@ import com.github.pagehelper.PageHelper;
 import fun.oook.lottery.api.service.CardGameService;
 import fun.oook.lottery.commons.db.entity.CardGame;
 import fun.oook.lottery.commons.db.entity.CardGameExample;
+import fun.oook.lottery.commons.db.entity.CardProductDTO;
 import fun.oook.lottery.commons.db.mapper.CardGameMapper;
+import fun.oook.lottery.commons.db.mapper.GameLoadMapper;
 import fun.oook.lottery.commons.util.PageBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ZhouYu
@@ -20,6 +23,9 @@ public class CardGameServiceImpl implements CardGameService {
 
     @Resource
     private CardGameMapper gameMapper;
+
+    @Resource
+    private GameLoadMapper loadMapper;
 
     @Override
     public PageBean<CardGame> listByStatus(final int status, final int currentPage, final int limit) {
@@ -56,5 +62,10 @@ public class CardGameServiceImpl implements CardGameService {
     public int insertOne(final CardGame cardGame) {
         final int selective = gameMapper.insert(cardGame);
         return selective;
+    }
+
+    @Override
+    public List<CardProductDTO> productDTOS(final int gameId) {
+        return loadMapper.getByGameId(gameId);
     }
 }

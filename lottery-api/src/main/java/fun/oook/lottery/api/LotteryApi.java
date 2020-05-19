@@ -1,6 +1,10 @@
 package fun.oook.lottery.api;
 
 import com.github.pagehelper.PageHelper;
+import fun.oook.lottery.api.controller.LoginController;
+import fun.oook.lottery.api.coonfig.SwaggerConfig;
+import fun.oook.lottery.api.service.CardGameService;
+import fun.oook.lottery.commons.config.RedisConfig;
 import fun.oook.lottery.commons.util.RedisUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +24,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @MapperScan("fun.oook.lottery.commons.db.mapper")
 @EnableCaching
-@ComponentScan(basePackageClasses = {RedisUtil.class})
+@ComponentScan(basePackageClasses = {RedisUtil.class, SwaggerConfig.class, LoginController.class, CardGameService.class, RedisConfig.class})
 public class LotteryApi {
 
     public static void main(String[] args) {

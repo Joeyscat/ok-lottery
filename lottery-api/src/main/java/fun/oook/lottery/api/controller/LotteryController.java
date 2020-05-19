@@ -55,6 +55,12 @@ public class LotteryController {
     @ApiImplicitParam(name = "game_id", value = "活动id", example = "1", required = true)
     public ApiResult<Object> lottery(@PathVariable("game_id") final int gameId,
                                      final HttpServletRequest req) {
+        final HttpSession session = req.getSession();
+        final CardUser user = (CardUser) redisUtil.get(RedisKeys.USER_SESSION_ID + session.getId());
+        if (user == null) {
+            return new ApiResult<>(-1, "未登录", null);
+        }
+
         final Date now = new Date();
         final CardGame game = (CardGame) redisUtil.get(RedisKeys.GAME_INFO + gameId);
 
@@ -67,11 +73,6 @@ public class LotteryController {
             return new ApiResult<>(-1, "活动已结束", null);
         }
 
-        final HttpSession session = req.getSession();
-        final CardUser user = (CardUser) redisUtil.get(RedisKeys.USER_SESSION_ID + session.getId());
-        if (user == null) {
-            return new ApiResult<>(-1, "未登录", null);
-        }
         final Integer userId = user.getId();
         if (!redisUtil.hasKey(RedisKeys.USER_GAME + userId + "_" + gameId)) {
             redisUtil.set(RedisKeys.USER_GAME + userId + "_" + gameId, 1, (game.getEndtime().getTime() - now.getTime()) / 1000);
@@ -83,14 +84,15 @@ public class LotteryController {
             rabbitTemplate.convertAndSend(RabbitKeys.QUEUE_PLAY, userGame);
         }
         // 用户已中奖次数
-        Integer count = (Integer) redisUtil.get(RedisKeys.USER_HIT + gameId + "_" + userId);
+        final Object c = redisUtil.get(RedisKeys.USER_HIT + gameId + "_" + userId);
+        Integer count = c == null ? null : Integer.parseInt((String.valueOf(c)));
         if (count == null) {
             count = 0;
             redisUtil.set(RedisKeys.USER_HIT + game + "_" + userId, count, (game.getEndtime().getTime() - now.getTime()) / 1000);
         }
         // 根据会员等级，获取中奖上限
-        Integer maxCount = (Integer) redisUtil.hget(RedisKeys.GAME_MAX_GOAL + gameId, Integer.toString(user.getLevel()));
-        maxCount = maxCount == null ? 0 : maxCount;
+        final Object maxGoal = redisUtil.hget(RedisKeys.GAME_MAX_GOAL + gameId, Integer.toString(user.getLevel()));
+        int maxCount = maxGoal == null ? 0 : Integer.parseInt(String.valueOf(maxGoal));
         if (maxCount > 0 && count >= maxCount) {
             // 达到最大中奖数，不再允许抽奖
             return new ApiResult<>(-1, "您已达到最大中奖数", null);

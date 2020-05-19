@@ -49,7 +49,7 @@ public class GameController {
     @GetMapping("/info/{game_id}")
     @ApiOperation(value = "活动信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "gameId", value = "活动id", example = "1", required = true)
+            @ApiImplicitParam(name = "game_id", value = "活动id", example = "1", required = true)
     })
     public ApiResult<CardGame> info(@PathVariable("game_id") int gameId) {
         return new ApiResult<>(1, "成功", cardGameService.selectByGameId(gameId));

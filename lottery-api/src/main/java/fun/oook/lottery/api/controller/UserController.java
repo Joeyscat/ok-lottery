@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/api/user")
-@Api(tags = {"用户模块"})
+@Api(value = "用户模块",tags = "用户模块")
 public class UserController {
 
     @Resource

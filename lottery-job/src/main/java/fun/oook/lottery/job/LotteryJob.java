@@ -1,5 +1,6 @@
 package fun.oook.lottery.job;
 
+import fun.oook.lottery.commons.config.RedisConfig;
 import fun.oook.lottery.commons.util.RedisUtil;
 import fun.oook.lottery.job.config.ElasticJobAutoConfig;
 import fun.oook.lottery.job.task.GameTask;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("fun.oook.lottery.commons.db.mapper")
-@ComponentScan(basePackageClasses = {RedisUtil.class, ElasticJobAutoConfig.class, GameTask.class})
+@ComponentScan(basePackageClasses = {RedisUtil.class, ElasticJobAutoConfig.class, GameTask.class, RedisConfig.class})
 public class LotteryJob {
 
     public static void main(String[] args) {

@@ -27,6 +27,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>14</java.version>
+		<knife4j.version>2.0.2</knife4j.version>
 	</properties>
 
 	<profiles>
@@ -85,16 +86,21 @@
 				<version>5.1.11</version>
 			</dependency>
 
-			<!--swagger2增强，项目启动后访问地址： /doc.html  -->
 			<dependency>
 				<groupId>com.github.xiaoymin</groupId>
-				<artifactId>swagger-bootstrap-ui</artifactId>
-				<version>1.8.8</version>
+				<artifactId>knife4j-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.google.guava</groupId>
+						<artifactId>guava</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger2</artifactId>
-				<version>2.9.2</version>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>20.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
